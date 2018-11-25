@@ -1,8 +1,205 @@
+INSTRUCTIONS:
+
+- define name of database in .env file
+
+- run "php artisan install:app" command (This creates database, migrate and seed data. If database already exists, it reinstall whole application)
+
+
+SAMPLE OBJECT FOR SENDING REQUEST:
+
 {
-	"tags": [1],
-	"category_id" : 1,
+	"tags": [2],
+	"category_id": 1,
 	"language_id": 1,
 	"per_page": 8,
 	"page": 1,
-	"with": ["ingredients", "categories", "tags"]
+	"with": ["tags", "ingredients", "categories"],
+	"diff_time": "2018-11-22"
+}
+
+Parameter description:
+
+"tags" - Array of tag IDs, optional
+"category_id" - ID of category from "categories" table, optional
+"language_id" - ID of language from "languages" table, required
+"per_page" - Integer, indicates how many results to show per page paginate resource results
+"page" - Integer, target specific page when paginate resourcce results
+"with" - Array, available values: tags, ingredients, categories
+"diff_time" - Date, needs to be sent in Y-m-d format
+
+
+SAMPLE RESPONSE OBJECT LOOKS LIKE THIS:
+
+{
+    "data": {
+        "current_page": 1,
+        "data": [
+            {
+                "id": 2,
+                "food_id": 1,
+                "language_id": 1,
+                "category_id": 1,
+                "title": "Pizza",
+                "description": "Popularno talijansko jelo",
+                "created_at": "2018-11-25 12:48:25",
+                "updated_at": "2018-11-25 12:48:25",
+                "status": "created",
+                "category": {
+                    "id": 2,
+                    "language_id": 1,
+                    "category_id": 1,
+                    "title": "Glavno jelo",
+                    "created_at": "2018-11-25 12:48:25",
+                    "updated_at": "2018-11-25 12:48:25",
+                    "categories": {
+                        "id": 1,
+                        "slug": "glavno-jelo",
+                        "created_at": "2018-11-25 12:48:25",
+                        "updated_at": "2018-11-25 12:48:25"
+                    }
+                },
+                "tags": [
+                    {
+                        "id": 4,
+                        "language_id": 1,
+                        "tag_id": 2,
+                        "title": "Super",
+                        "created_at": "2018-11-25 12:48:25",
+                        "updated_at": "2018-11-25 12:48:25",
+                        "tags": {
+                            "id": 2,
+                            "slug": "super",
+                            "created_at": "2018-11-25 12:48:25",
+                            "updated_at": "2018-11-25 12:48:25"
+                        }
+                    }
+                ],
+                "with": [
+                    {
+                        "id": 2,
+                        "language_id": 1,
+                        "ingredient_id": 1,
+                        "title": "Sir",
+                        "created_at": "2018-11-25 12:48:25",
+                        "updated_at": "2018-11-25 12:48:25",
+                        "ingredients": {
+                            "id": 1,
+                            "slug": "sir",
+                            "created_at": "2018-11-25 12:48:25",
+                            "updated_at": "2018-11-25 12:48:25"
+                        }
+                    },
+                    {
+                        "id": 10,
+                        "language_id": 1,
+                        "ingredient_id": 5,
+                        "title": "Tajni sastojak",
+                        "created_at": "2018-11-25 12:48:25",
+                        "updated_at": "2018-11-25 12:48:25",
+                        "ingredients": {
+                            "id": 5,
+                            "slug": "tajni_sastojak",
+                            "created_at": "2018-11-25 12:48:25",
+                            "updated_at": "2018-11-25 12:48:25"
+                        }
+                    }
+                ]
+            },
+            {
+                "id": 6,
+                "food_id": 3,
+                "language_id": 1,
+                "category_id": 1,
+                "title": "Rižoto sa piletinom",
+                "description": "Integrirana riža sa pečenim pilećim komadima mesa",
+                "created_at": "2018-11-25 12:48:25",
+                "updated_at": "2018-11-25 12:48:25",
+                "status": "created",
+                "category": {
+                    "id": 2,
+                    "language_id": 1,
+                    "category_id": 1,
+                    "title": "Glavno jelo",
+                    "created_at": "2018-11-25 12:48:25",
+                    "updated_at": "2018-11-25 12:48:25",
+                    "categories": {
+                        "id": 1,
+                        "slug": "glavno-jelo",
+                        "created_at": "2018-11-25 12:48:25",
+                        "updated_at": "2018-11-25 12:48:25"
+                    }
+                },
+                "tags": [
+                    {
+                        "id": 4,
+                        "language_id": 1,
+                        "tag_id": 2,
+                        "title": "Super",
+                        "created_at": "2018-11-25 12:48:25",
+                        "updated_at": "2018-11-25 12:48:25",
+                        "tags": {
+                            "id": 2,
+                            "slug": "super",
+                            "created_at": "2018-11-25 12:48:25",
+                            "updated_at": "2018-11-25 12:48:25"
+                        }
+                    }
+                ],
+                "with": [
+                    {
+                        "id": 4,
+                        "language_id": 1,
+                        "ingredient_id": 2,
+                        "title": "Maslinovo Ulje",
+                        "created_at": "2018-11-25 12:48:25",
+                        "updated_at": "2018-11-25 12:48:25",
+                        "ingredients": {
+                            "id": 2,
+                            "slug": "maslina_ulje",
+                            "created_at": "2018-11-25 12:48:25",
+                            "updated_at": "2018-11-25 12:48:25"
+                        }
+                    },
+                    {
+                        "id": 6,
+                        "language_id": 1,
+                        "ingredient_id": 3,
+                        "title": "Celer",
+                        "created_at": "2018-11-25 12:48:25",
+                        "updated_at": "2018-11-25 12:48:25",
+                        "ingredients": {
+                            "id": 3,
+                            "slug": "celer",
+                            "created_at": "2018-11-25 12:48:25",
+                            "updated_at": "2018-11-25 12:48:25"
+                        }
+                    },
+                    {
+                        "id": 8,
+                        "language_id": 1,
+                        "ingredient_id": 4,
+                        "title": "Češnjak",
+                        "created_at": "2018-11-25 12:48:25",
+                        "updated_at": "2018-11-25 12:48:25",
+                        "ingredients": {
+                            "id": 4,
+                            "slug": "cesnjak",
+                            "created_at": "2018-11-25 12:48:25",
+                            "updated_at": "2018-11-25 12:48:25"
+                        }
+                    }
+                ]
+            }
+        ],
+        "first_page_url": "http://food.loc/api/foods?page=1",
+        "from": 1,
+        "last_page": 1,
+        "last_page_url": "http://food.loc/api/foods?page=1",
+        "next_page_url": null,
+        "path": "http://food.loc/api/foods",
+        "per_page": 8,
+        "prev_page_url": null,
+        "to": 2,
+        "total": 2
+    }
 }
