@@ -10,7 +10,6 @@ use App\Categories;
 */
 class Metadata
 {
-
 	public function __construct(Languages $languages, Categories $categories)
 	{
 		if ($hr = $languages->where('code_key', 'hr')->first()->id) {

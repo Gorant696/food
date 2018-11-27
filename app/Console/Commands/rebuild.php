@@ -40,7 +40,6 @@ class rebuild extends Command
      */
     public function handle()
     {
-        
         //Set variable for database "menu"
         $db = env('DB_DATABASE');
 
@@ -54,10 +53,13 @@ class rebuild extends Command
         //Queries to drop and create fresh database "menu"
          mysqli_query($conn,"DROP DATABASE ".$db);
          mysqli_query($conn,"CREATE DATABASE ".$db." character set UTF8 collate utf8_general_ci");
+
+         //Creating fresh DB tables defined in database/migration folder
          Artisan::call('migrate:refresh');
+
+         //Seed predefined data from app/Meta/Metadata.php file
          Artisan::call('db:seed');
 
-        dd('Application installed successfully');
-
+        echo "Application installed successfully!";
     }
 }

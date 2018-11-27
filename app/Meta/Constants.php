@@ -3,7 +3,7 @@
 namespace App\Meta;
 
 /*
-	Class responsible for validating parameters from request
+	Defined constants
 */
 
 class Constants
