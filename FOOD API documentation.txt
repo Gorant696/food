@@ -22,10 +22,10 @@ Parameter description:
 "tags" - Array of tag IDs, optional
 "category_id" - ID of category from "categories" table, optional
 "language_id" - ID of language from "languages" table, required
-"per_page" - Integer, indicates how many results to show per page paginate resource results
-"page" - Integer, target specific page when paginate resourcce results
-"with" - Array, available values: tags, ingredients, categories
-"diff_time" - Date, needs to be sent in Y-m-d format
+"per_page" - Integer, indicates how many results to show per page paginate resource results, optional
+"page" - Integer, target specific page when paginate resourcce results, optional
+"with" - Array, available values: tags, ingredients, categories, optional
+"diff_time" - Date, needs to be sent in Y-m-d format, optional
 
 
 SAMPLE RESPONSE OBJECT LOOKS LIKE THIS:
