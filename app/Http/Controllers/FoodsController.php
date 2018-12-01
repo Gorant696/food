@@ -10,9 +10,6 @@ use App\FoodsTrans;
 use App\TagsTrans;
 use App\IngredientsTrans;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\MessageBag;
-use App\Meta\ValidateRequest;
 use App\Meta\Constants;
 
 
@@ -29,13 +26,7 @@ class FoodsController extends Controller
             IngredientsTrans $ingredients_trans
         ) 
     {
-        //Validate parameters from request
-        $validation = Validator::make($request->all(), ValidateRequest::{__FUNCTION__}());
-
-        if($validation->fails()){
-            return response()->json(['message' => $validation->errors()]);
-        }
-
+       
         //Filter foods by tags
         $final_food_ids = $this->filter_foods_by_tags($request, $tags, $foods);
 
