@@ -19,7 +19,6 @@ class Metadata
 		if ($en = $languages->where('code_key', 'en')->first()->id) {
 			$this->en = $en;
 		}
-
 	}
 
 	static function list_of_languages()

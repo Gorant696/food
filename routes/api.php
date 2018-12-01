@@ -16,3 +16,5 @@ use Illuminate\Http\Request;
 Route::apiResource('foods', 'FoodsController');
 
 Route::get('foods', 'FoodsController@index')->middleware('validate_index');
+
+Route::post('foods', 'FoodsController@store')->middleware('validate_index');

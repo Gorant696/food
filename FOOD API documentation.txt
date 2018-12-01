@@ -203,3 +203,26 @@ SAMPLE RESPONSE OBJECT LOOKS LIKE THIS:
         "total": 2
     }
 }
+
+
+INSERTING NEW FOOD:
+
+SAMPLE OBJECT FOR SENDING REQUEST:
+
+{
+    "slug": "burger",
+    "category_id": 2,
+    "food_trans_hr": {
+        "language_id": 1,
+        "title": "Hamburger",
+        "description": "Tradicionalno američko jelo"
+    },
+    "food_trans_en": {
+        "language_id": 2,
+        "title": "Hamburger",
+        "description": "Traditional american food"
+    },
+    "tags": [1,2],
+    "ingredients":[1,5]
+}
+

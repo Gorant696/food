@@ -228,4 +228,9 @@ class FoodsController extends Controller
         return response()->json(['data' => $final_foods]);
     }
 
+    public function store()
+    {
+        dd('u storeu');
+    }
+
 }
