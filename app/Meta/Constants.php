@@ -14,12 +14,17 @@ class Constants
     public const TAG_ID = 'tag_id';
     public const CAT_ID = 'category_id';
     public const ING_ID = 'ingredient_id';
+    public const SLUG = 'slug';
+    public const TITLE = 'title';
+    public const DESC = 'description';
+
 
     public const FOODS = 'foods';
     public const LANGS = 'languages';
     public const TAGS = 'tags';
     public const CATS = 'categories';
     public const INGS = 'ingredients';
+    public const FT = 'foods_trans';
 
     public const DEL = 'deleted';
     public const CRE = 'created';

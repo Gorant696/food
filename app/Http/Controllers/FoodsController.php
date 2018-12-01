@@ -228,9 +228,47 @@ class FoodsController extends Controller
         return response()->json(['data' => $final_foods]);
     }
 
-    public function store()
+    public function store(Request $request, Foods $foods, FoodsTrans $foods_trans)
     {
-        dd('u storeu');
+        if (!$foods->where(Constants::SLUG, $request->slug)->count()) {
+            $food_model = $foods->create([
+                Constants::SLUG => $request->slug
+            ]);
+
+            if ($food_model) {
+
+                    $food_model->foods_trans()->create([
+                        Constants::LANG_ID => $request->food_trans_hr[Constants::LANG_ID],
+                        Constants::CAT_ID => $request->category_id,
+                        Constants::TITLE => $request->food_trans_hr[Constants::TITLE],
+                        Constants::DESC => $request->food_trans_hr[Constants::DESC]
+                    ]);
+
+                    $food_model->foods_trans()->create([
+                        Constants::LANG_ID => $request->food_trans_en[Constants::LANG_ID],
+                        Constants::CAT_ID => $request->category_id,
+                        Constants::TITLE => $request->food_trans_en[Constants::TITLE],
+                        Constants::DESC => $request->food_trans_en[Constants::DESC]
+                    ]);
+
+                    foreach ($request->tags as $tag) {
+                        $food_model->tags()->attach($tag);
+                    }
+
+                     foreach ($request->ingredients as $ingredient) {
+                        $food_model->ingredients()->attach($ingredient);
+                    }
+
+                    $this->status($request, $food_model);
+                    $food_model->translations = $food_model->foods_trans()->with(Constants::CATS)->get();
+                    $food_model->ingredients = $food_model->ingredients()->get();
+                    $food_model->tags = $food_model->tags()->get();
+                    
+                    return response()->json(['data' => $food_model]);
+            }
+        }
+     
+        return response()->json(['message' => 'Food already exists!'], 400);
     }
 
 }

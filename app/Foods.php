@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Foods extends Model
 {
     use SoftDeletes;
+
+    protected $fillable = ['slug'];
     
     protected $table = 'foods';
 

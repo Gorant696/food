@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class FoodsTrans extends Model
 {
     protected $table = 'foods_trans';
+    protected $fillable = ['language_id', 'category_id', 'title', 'description'];
 
     public function foods()
     {
