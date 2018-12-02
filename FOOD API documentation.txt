@@ -1,8 +1,19 @@
 INSTRUCTIONS:
 
-- define name of database in .env file
+- define name of database and other connection parameters in .env file in root of laravel project
 
 - run "php artisan install:app" command (This creates database, migrate and seed data. If database already exists, it reinstall whole application)
+
+
+    |--------------------------|
+       -- SENDING REQUESTS --
+    |--------------------------|
+
+
+- send Content-Type Header with "application/json" value with each request. 
+
+- Request body needs to contain valid json object with appropriate parameters. Read further text for more details
+
 
 *****************************************************************************************************
 
