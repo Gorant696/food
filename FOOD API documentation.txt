@@ -4,8 +4,16 @@ INSTRUCTIONS:
 
 - run "php artisan install:app" command (This creates database, migrate and seed data. If database already exists, it reinstall whole application)
 
+*****************************************************************************************************
+
+    |--------------------------|
+    -- GET FOODS BY FILTERING --
+    |--------------------------|
 
 SAMPLE OBJECT FOR SENDING REQUEST:
+
+METHOD: GET
+ROUTE: {base_url}/api/foods
 
 {
 	"tags": [2],
@@ -28,201 +36,89 @@ Parameter description:
 "diff_time" - Date, needs to be sent in Y-m-d format, optional
 
 
-SAMPLE RESPONSE OBJECT LOOKS LIKE THIS:
 
-{
-    "data": {
-        "current_page": 1,
-        "data": [
-            {
-                "id": 2,
-                "food_id": 1,
-                "language_id": 1,
-                "category_id": 1,
-                "title": "Pizza",
-                "description": "Popularno talijansko jelo",
-                "created_at": "2018-11-25 12:48:25",
-                "updated_at": "2018-11-25 12:48:25",
-                "status": "created",
-                "category": {
-                    "id": 2,
-                    "language_id": 1,
-                    "category_id": 1,
-                    "title": "Glavno jelo",
-                    "created_at": "2018-11-25 12:48:25",
-                    "updated_at": "2018-11-25 12:48:25",
-                    "categories": {
-                        "id": 1,
-                        "slug": "glavno-jelo",
-                        "created_at": "2018-11-25 12:48:25",
-                        "updated_at": "2018-11-25 12:48:25"
-                    }
-                },
-                "tags": [
-                    {
-                        "id": 4,
-                        "language_id": 1,
-                        "tag_id": 2,
-                        "title": "Super",
-                        "created_at": "2018-11-25 12:48:25",
-                        "updated_at": "2018-11-25 12:48:25",
-                        "tags": {
-                            "id": 2,
-                            "slug": "super",
-                            "created_at": "2018-11-25 12:48:25",
-                            "updated_at": "2018-11-25 12:48:25"
-                        }
-                    }
-                ],
-                "with": [
-                    {
-                        "id": 2,
-                        "language_id": 1,
-                        "ingredient_id": 1,
-                        "title": "Sir",
-                        "created_at": "2018-11-25 12:48:25",
-                        "updated_at": "2018-11-25 12:48:25",
-                        "ingredients": {
-                            "id": 1,
-                            "slug": "sir",
-                            "created_at": "2018-11-25 12:48:25",
-                            "updated_at": "2018-11-25 12:48:25"
-                        }
-                    },
-                    {
-                        "id": 10,
-                        "language_id": 1,
-                        "ingredient_id": 5,
-                        "title": "Tajni sastojak",
-                        "created_at": "2018-11-25 12:48:25",
-                        "updated_at": "2018-11-25 12:48:25",
-                        "ingredients": {
-                            "id": 5,
-                            "slug": "tajni_sastojak",
-                            "created_at": "2018-11-25 12:48:25",
-                            "updated_at": "2018-11-25 12:48:25"
-                        }
-                    }
-                ]
-            },
-            {
-                "id": 6,
-                "food_id": 3,
-                "language_id": 1,
-                "category_id": 1,
-                "title": "Rižoto sa piletinom",
-                "description": "Integrirana riža sa pečenim pilećim komadima mesa",
-                "created_at": "2018-11-25 12:48:25",
-                "updated_at": "2018-11-25 12:48:25",
-                "status": "created",
-                "category": {
-                    "id": 2,
-                    "language_id": 1,
-                    "category_id": 1,
-                    "title": "Glavno jelo",
-                    "created_at": "2018-11-25 12:48:25",
-                    "updated_at": "2018-11-25 12:48:25",
-                    "categories": {
-                        "id": 1,
-                        "slug": "glavno-jelo",
-                        "created_at": "2018-11-25 12:48:25",
-                        "updated_at": "2018-11-25 12:48:25"
-                    }
-                },
-                "tags": [
-                    {
-                        "id": 4,
-                        "language_id": 1,
-                        "tag_id": 2,
-                        "title": "Super",
-                        "created_at": "2018-11-25 12:48:25",
-                        "updated_at": "2018-11-25 12:48:25",
-                        "tags": {
-                            "id": 2,
-                            "slug": "super",
-                            "created_at": "2018-11-25 12:48:25",
-                            "updated_at": "2018-11-25 12:48:25"
-                        }
-                    }
-                ],
-                "with": [
-                    {
-                        "id": 4,
-                        "language_id": 1,
-                        "ingredient_id": 2,
-                        "title": "Maslinovo Ulje",
-                        "created_at": "2018-11-25 12:48:25",
-                        "updated_at": "2018-11-25 12:48:25",
-                        "ingredients": {
-                            "id": 2,
-                            "slug": "maslina_ulje",
-                            "created_at": "2018-11-25 12:48:25",
-                            "updated_at": "2018-11-25 12:48:25"
-                        }
-                    },
-                    {
-                        "id": 6,
-                        "language_id": 1,
-                        "ingredient_id": 3,
-                        "title": "Celer",
-                        "created_at": "2018-11-25 12:48:25",
-                        "updated_at": "2018-11-25 12:48:25",
-                        "ingredients": {
-                            "id": 3,
-                            "slug": "celer",
-                            "created_at": "2018-11-25 12:48:25",
-                            "updated_at": "2018-11-25 12:48:25"
-                        }
-                    },
-                    {
-                        "id": 8,
-                        "language_id": 1,
-                        "ingredient_id": 4,
-                        "title": "Češnjak",
-                        "created_at": "2018-11-25 12:48:25",
-                        "updated_at": "2018-11-25 12:48:25",
-                        "ingredients": {
-                            "id": 4,
-                            "slug": "cesnjak",
-                            "created_at": "2018-11-25 12:48:25",
-                            "updated_at": "2018-11-25 12:48:25"
-                        }
-                    }
-                ]
-            }
-        ],
-        "first_page_url": "http://food.loc/api/foods?page=1",
-        "from": 1,
-        "last_page": 1,
-        "last_page_url": "http://food.loc/api/foods?page=1",
-        "next_page_url": null,
-        "path": "http://food.loc/api/foods",
-        "per_page": 8,
-        "prev_page_url": null,
-        "to": 2,
-        "total": 2
-    }
-}
+*****************************************************************************************************
 
-
-INSERTING NEW FOOD:
+    |----------------|
+    --INSERTING FOOD--
+    |----------------|
 
 SAMPLE OBJECT FOR SENDING REQUEST:
 
+METHOD: POST
+ROUTE: {base_url}/api/foods
+
 {
     "slug": "burger",
-    "category_id": 2,
     "food_trans_hr": {
         "language_id": 1,
         "title": "Hamburger",
-        "description": "Tradicionalno američko jelo"
+        "description": "Tradicionalno američko jelo",
+        "category_id" : 1
     },
     "food_trans_en": {
         "language_id": 2,
         "title": "Hamburger",
-        "description": "Traditional american food"
+        "description": "Traditional american food",
+        "category_id": 1
     },
     "tags": [1,2],
     "ingredients":[1,5]
 }
+
+Parameter description:
+
+"slug" - string, required, only lowercase letters, integers and underscores available
+"tags" - Array of tag IDs, optional
+"food_trans_hr"  - Array (4 default keys are: language_id, title, description, category_id)
+                 - language_id - required, integer, Id of selected language (for example ID of hr language)
+                 - title - required, string
+                 - description - required, string
+                 - category_id - optional, integer, id of selected category, nullable
+"food_trans_en"  - Array (4 default keys are: language_id, title, description, category_id)
+                 - language_id - required, integer, Id of selected language (for example ID of en language)
+                 - title - required, string
+                 - description - required, string
+                 - category_id - optional, integer, id of selected category, nullable
+"tags" - Array of tag IDs, optional
+"ingredients" - Array of ingredient IDs, optional
+
+*****************************************************************************************************
+
+    |---------------|
+    --DELETING FOOD--
+    |---------------|
+
+SAMPLE OBJECT FOR SENDING REQUEST:
+
+METHOD: DELETE
+ROUTE: {base_url}/api/foods
+
+{
+    "ids": [1,2,3]
+}
+
+Parameter description:
+
+"ids" - Array of food IDs (array values needs to be integer data type), required
+
+
+*****************************************************************************************************
+
+    |------------------------|
+    --RESTORING DELETED FOOD--
+    |------------------------|
+
+SAMPLE OBJECT FOR SENDING REQUEST:
+
+METHOD: PUT
+ROUTE: {base_url}/api/foods
+
+{
+    "ids": [1,2,3]
+}
+
+Parameter description:
+
+"ids" - Array of soft deleted foods IDs (array values needs to be integer data type), required
 

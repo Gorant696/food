@@ -194,12 +194,12 @@ class FoodsController extends Controller
                 return true;
             }
 
-            if ($food->created_at->format('Y-m-d') == $food->updated_at->format('Y-m-d')) {
+            if ($food->created_at->format('Y-m-d H:i:s') == $food->updated_at->format('Y-m-d H:i:s')) {
                 $food_object->status = Constants::CRE;
                 return true;
             }
 
-            if ($food->created_at->format('Y-m-d') < $food->updated_at->format('Y-m-d')) {
+            if ($food->created_at->format('Y-m-d H:i:s') < $food->updated_at->format('Y-m-d H:i:s')) {
                 $food_object->status = Constants::UPD;
                 return true;
             }
@@ -228,8 +228,12 @@ class FoodsController extends Controller
         return response()->json(['data' => $final_foods]);
     }
 
+    /*
+        Inserting new food models into foods table
+    */
     public function store(Request $request, Foods $foods, FoodsTrans $foods_trans)
     {
+        //Create food entity in foods table if does not exists
         if (!$foods->where(Constants::SLUG, $request->slug)->count()) {
             $food_model = $foods->create([
                 Constants::SLUG => $request->slug
@@ -237,28 +241,20 @@ class FoodsController extends Controller
 
             if ($food_model) {
 
-                    $food_model->foods_trans()->create([
-                        Constants::LANG_ID => $request->food_trans_hr[Constants::LANG_ID],
-                        Constants::CAT_ID => $request->category_id,
-                        Constants::TITLE => $request->food_trans_hr[Constants::TITLE],
-                        Constants::DESC => $request->food_trans_hr[Constants::DESC]
-                    ]);
+                    //Create translations for food model
+                    $food_model->foods_trans()->create($request->food_trans_hr);
+                    $food_model->foods_trans()->create($request->food_trans_en);
 
-                    $food_model->foods_trans()->create([
-                        Constants::LANG_ID => $request->food_trans_en[Constants::LANG_ID],
-                        Constants::CAT_ID => $request->category_id,
-                        Constants::TITLE => $request->food_trans_en[Constants::TITLE],
-                        Constants::DESC => $request->food_trans_en[Constants::DESC]
-                    ]);
-
+                    //Attach tag and ingredient ID's into pivot table
                     foreach ($request->tags as $tag) {
                         $food_model->tags()->attach($tag);
                     }
 
-                     foreach ($request->ingredients as $ingredient) {
+                    foreach ($request->ingredients as $ingredient) {
                         $food_model->ingredients()->attach($ingredient);
                     }
 
+                    //Setting properties for returning model
                     $this->status($request, $food_model);
                     $food_model->translations = $food_model->foods_trans()->with(Constants::CATS)->get();
                     $food_model->ingredients = $food_model->ingredients()->get();
@@ -269,6 +265,31 @@ class FoodsController extends Controller
         }
      
         return response()->json(['message' => 'Food already exists!'], 400);
+    }
+
+    /*
+        Soft deleting food models from foods table
+    */
+    public function delete(Request $request, Foods $foods)
+    {   
+        //Models are soft deleted
+        foreach ($request->ids as $id) {
+            $foods->findOrFail($id)->delete();
+        }
+
+        return response()->json(['message' => 'Deleted successfully!'], 200);
+    }
+
+    /*
+        Restoring soft-deleted food models from foods table
+    */
+    public function restore(Request $request, Foods $foods)
+    {
+        //Restore deleted models
+        $foods->withTrashed()->whereIn('id', $request->ids)->restore();
+
+        return response()->json(['message' => 'Restored successfully!'], 200);
+        
     }
 
 }

@@ -18,3 +18,7 @@ Route::apiResource('foods', 'FoodsController');
 Route::get('foods', 'FoodsController@index')->middleware('validate_index');
 
 Route::post('foods', 'FoodsController@store')->middleware('validate_index');
+
+Route::delete('foods', 'FoodsController@delete')->middleware('validate_index');
+
+Route::put('foods', 'FoodsController@restore')->middleware('validate_index');

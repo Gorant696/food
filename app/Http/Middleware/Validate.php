@@ -33,7 +33,9 @@ class Validate
     {
         return [
             'GET' => 'index',
-            'POST' => 'store'
+            'POST' => 'store',
+            'DELETE' => 'delete',
+            'PUT' => 'restore'
         ];
     }
 }
