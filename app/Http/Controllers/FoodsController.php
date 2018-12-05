@@ -130,7 +130,7 @@ class FoodsController extends Controller
     */
     private function categories($request, $food_object)
     {
-        if ( in_array(__FUNCTION__, $request->with)) {
+        if (isset($request->with) && in_array(__FUNCTION__, $request->with)) {
             if ($food_object->category_id) {
                 $food_object->category = $food_object->categories()->first()->categoriesTrans()->where(Constants::LANG_ID, $request->language_id)->with(Constants::CATS)->first();
             }
@@ -144,7 +144,7 @@ class FoodsController extends Controller
     */
     private function tags($request, $food_object, $tags_trans)
     {
-        if ( in_array(__FUNCTION__, $request->with)) {
+        if (isset($request->with) && in_array(__FUNCTION__, $request->with)) {
             $food_object->tags = $tags_trans
             ->whereIn(Constants::TAG_ID, $this->checkDiffTime($request, $food_object)->first()->tags()->get()->pluck(Constants::ID)->toArray())
             ->where(Constants::LANG_ID, $request->language_id)->with(Constants::TAGS)->get();
@@ -158,7 +158,7 @@ class FoodsController extends Controller
     */
     private function ingredients($request, $food_object, $ingredients_trans)
     { 
-        if (in_array(__FUNCTION__, $request->with)) {
+        if (isset($request->with) && in_array(__FUNCTION__, $request->with)) {
             $food_object->with = $ingredients_trans
             ->whereIn(Constants::ING_ID, $this->checkDiffTime($request, $food_object)->first()->ingredients()->get()->pluck(Constants::ID)->toArray())
             ->where(Constants::LANG_ID, $request->language_id)->with(Constants::INGS)->get();
