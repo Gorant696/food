@@ -8,7 +8,7 @@ class Ingredients extends Model
 {
     protected $table = 'ingredients';
 
-    public function ingredients_trans()
+    public function ingredientsTrans()
     {
         return $this->hasMany('App\IngredientsTrans', 'ingredient_id');
     }

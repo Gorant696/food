@@ -13,7 +13,7 @@ class Foods extends Model
     
     protected $table = 'foods';
 
-    public function foods_trans()
+    public function foodsTrans()
     {
         return $this->hasMany('App\FoodsTrans', 'food_id');
     }

@@ -8,9 +8,9 @@ class Tags extends Model
 {
     protected $table = 'tags';
 
-    public function tags_trans()
+    public function tagsTrans()
     {
-        return $this->hasMany('App\tagsTrans', 'tag_id');
+        return $this->hasMany('App\TagsTrans', 'tag_id');
     }
 
     public function foods()

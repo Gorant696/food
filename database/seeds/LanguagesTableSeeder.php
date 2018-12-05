@@ -13,7 +13,7 @@ class LanguagesTableSeeder extends Seeder
      */
     public function run(Languages $languages)
     {
-        foreach (Metadata::list_of_languages() as $key => $language) {
+        foreach (Metadata::listOfLanguages() as $key => $language) {
         	$languages->create([
         		'code_key' => $key,
         		'lang_name' => $language

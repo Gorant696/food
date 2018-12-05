@@ -28,25 +28,25 @@ class FoodsController extends Controller
     {
        
         //Filter foods by tags
-        $final_food_ids = $this->filter_foods_by_tags($request, $tags, $foods);
+        $final_food_ids = $this->filterFoodsByTags($request, $tags, $foods);
 
         //Model of query for collection of foods resource
         $final_foods = $foods_trans->whereIn(Constants::FOOD_ID, $final_food_ids)->where(Constants::LANG_ID, $request->language_id);
 
         //Modify query based on category_id from request
-        $final_foods = $this->categories_check($request, $final_foods);
+        $final_foods = $this->categoriesCheck($request, $final_foods);
 
         //Paginate collection based on parameters from request
         $final_foods = $this->paginator($request, $final_foods);
 
-        return $this->format_response($request, $final_foods, $tags_trans, $ingredients_trans);
+        return $this->formatResponse($request, $final_foods, $tags_trans, $ingredients_trans);
     }
 
 
     /*
         Function checks if there are tags array inside request and returns array of food IDs based on search query. If array is empty or is not set, function will take all ID's of foods and return them as array value.
     */
-    private function filter_foods_by_tags($request, $tags, $foods)
+    private function filterFoodsByTags($request, $tags, $foods)
     {
         //If tags parameter is true and contain IDs of tags, filter foods based on tag IDs
         if (isset($request->tags) && !empty($request->tags)) {
@@ -91,10 +91,10 @@ class FoodsController extends Controller
             //Get the IDs of foods
             if ($request->diff_time) {
                return $foods->withTrashed()
-               ->whereDate('foods.created_at', '>=', Carbon::parse($request->diff_time))
-               ->orWhereDate('foods.updated_at', '>=', Carbon::parse($request->diff_time))
-               ->orWhereDate('foods.deleted_at', '>=', Carbon::parse($request->diff_time))
-               ->get()->pluck('id')->toArray();
+                   ->whereDate('foods.created_at', '>=', Carbon::parse($request->diff_time))
+                   ->orWhereDate('foods.updated_at', '>=', Carbon::parse($request->diff_time))
+                   ->orWhereDate('foods.deleted_at', '>=', Carbon::parse($request->diff_time))
+                   ->get()->pluck('id')->toArray();
             } else {
                  return $foods->get()->pluck(Constants::ID)->toArray();
             }
@@ -104,7 +104,7 @@ class FoodsController extends Controller
     /*
         Function responsible for modifying query to filter food based on categories
     */
-    private function categories_check($request, $final_foods)
+    private function categoriesCheck($request, $final_foods)
     {
         if ($request->category_id) {
             $final_foods = $final_foods->where(Constants::CAT_ID, $request->category_id);
@@ -132,7 +132,7 @@ class FoodsController extends Controller
     {
         if ( in_array(__FUNCTION__, $request->with)) {
             if ($food_object->category_id) {
-                $food_object->category = $food_object->categories()->first()->categories_trans()->where(Constants::LANG_ID, $request->language_id)->with(Constants::CATS)->first();
+                $food_object->category = $food_object->categories()->first()->categoriesTrans()->where(Constants::LANG_ID, $request->language_id)->with(Constants::CATS)->first();
             }
         }
 
@@ -146,7 +146,7 @@ class FoodsController extends Controller
     {
         if ( in_array(__FUNCTION__, $request->with)) {
             $food_object->tags = $tags_trans
-            ->whereIn(Constants::TAG_ID, self::check_diff_time($request, $food_object)->first()->tags()->get()->pluck(Constants::ID)->toArray())
+            ->whereIn(Constants::TAG_ID, $this->checkDiffTime($request, $food_object)->first()->tags()->get()->pluck(Constants::ID)->toArray())
             ->where(Constants::LANG_ID, $request->language_id)->with(Constants::TAGS)->get();
         }
 
@@ -160,7 +160,7 @@ class FoodsController extends Controller
     { 
         if (in_array(__FUNCTION__, $request->with)) {
             $food_object->with = $ingredients_trans
-            ->whereIn(Constants::ING_ID, self::check_diff_time($request, $food_object)->first()->ingredients()->get()->pluck(Constants::ID)->toArray())
+            ->whereIn(Constants::ING_ID, $this->checkDiffTime($request, $food_object)->first()->ingredients()->get()->pluck(Constants::ID)->toArray())
             ->where(Constants::LANG_ID, $request->language_id)->with(Constants::INGS)->get();
         }
 
@@ -170,7 +170,7 @@ class FoodsController extends Controller
     /*
         Modified object for foods based on diff_time
     */
-    private static function check_diff_time($request, $food_object)
+    private function checkDiffTime($request, $food_object)
     {
         $main_object = $food_object->foods();
 
@@ -213,7 +213,7 @@ class FoodsController extends Controller
     /*
         Function responsible for formating and creating valid response JSON object based on request parameters
     */
-    private function format_response($request, $final_foods, $tags_trans, $ingredients_trans)
+    private function formatResponse($request, $final_foods, $tags_trans, $ingredients_trans)
     {
         foreach ($final_foods as $food_object) {
             //Set status property of food object
@@ -242,8 +242,8 @@ class FoodsController extends Controller
             if ($food_model) {
 
                     //Create translations for food model
-                    $food_model->foods_trans()->create($request->food_trans_hr);
-                    $food_model->foods_trans()->create($request->food_trans_en);
+                    $food_model->foodsTrans()->create($request->food_trans_hr);
+                    $food_model->foodsTrans()->create($request->food_trans_en);
 
                     //Attach tag and ingredient ID's into pivot table
                     foreach ($request->tags as $tag) {
@@ -256,7 +256,7 @@ class FoodsController extends Controller
 
                     //Setting properties for returning model
                     $this->status($request, $food_model);
-                    $food_model->translations = $food_model->foods_trans()->with(Constants::CATS)->get();
+                    $food_model->translations = $food_model->foodsTrans()->with(Constants::CATS)->get();
                     $food_model->ingredients = $food_model->ingredients()->get();
                     $food_model->tags = $food_model->tags()->get();
                     

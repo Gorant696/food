@@ -20,7 +20,7 @@ class Validate
     public function handle($request, Closure $next)
     {
         //Validate parameters from request
-        $validation = Validator::make($request->all(), ValidateRequest::{$this->route_index()[$request->route()->methods[0]]}());
+        $validation = Validator::make($request->all(), ValidateRequest::{$this->routeIndex()[$request->route()->methods[0]]}());
         
         if($validation->fails()){
                 return response()->json(['message' => $validation->errors()]);
@@ -29,7 +29,7 @@ class Validate
         return $next($request);
     }
 
-    private function route_index()
+    private function routeIndex()
     {
         return [
             'GET' => 'index',

@@ -24,7 +24,7 @@ class Constants
     public const TAGS = 'tags';
     public const CATS = 'categories';
     public const INGS = 'ingredients';
-    public const FT = 'foods_trans';
+    public const FT = 'foodsTrans';
 
     public const DEL = 'deleted';
     public const CRE = 'created';

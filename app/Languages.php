@@ -8,22 +8,22 @@ class Languages extends Model
 {
     protected $table = 'languages';
 
-    public function foods_trans()
+    public function foodsTrans()
     {
         return $this->hasMany('App\FoodsTrans', 'language_id');
     }
 
-    public function categories_trans()
+    public function categoriesTrans()
     {
         return $this->hasMany('App\CategoriesTrans', 'language_id');
     }
 
-    public function tags_trans()
+    public function tagsTrans()
     {
         return $this->hasMany('App\TagsTrans', 'language_id');
     }
 
-    public function ingredients_trans()
+    public function ingredientsTrans()
     {
         return $this->hasMany('App\IngredientsTrans', 'language_id');
     }

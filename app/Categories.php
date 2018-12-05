@@ -8,12 +8,12 @@ class Categories extends Model
 {
     protected $table = 'categories';
 
-    public function categories_trans()
+    public function categoriesTrans()
     {
         return $this->hasMany('App\CategoriesTrans', 'category_id');
     }
 
-    public function foods_trans()
+    public function foodsTrans()
     {
         return $this->hasMany('App\FoodsTrans', 'food_id');
     }

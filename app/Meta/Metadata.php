@@ -21,7 +21,7 @@ class Metadata
 		}
 	}
 
-	static function list_of_languages()
+	static function listOfLanguages()
 	{
 		 return [
 		        'hr' => 'Croatian',
@@ -30,7 +30,7 @@ class Metadata
 	}
 
 
-	static function ingredients_for_food()
+	static function ingredientsForFood()
 	{
 		return [
 				'sir' => ['pizza', 'tjestenina_skampi'],
@@ -41,7 +41,7 @@ class Metadata
 			   ];
 	}
 
-	public function list_of_ingredients()
+	public function listOfIngredients()
 	{
 		return 
         [
@@ -98,7 +98,7 @@ class Metadata
     	];
 	}
 
-	public function list_of_food(Categories $categories)
+	public function listOfFood(Categories $categories)
 	{
 		$main_meal = $categories->where('slug', 'glavno-jelo')->first()->id;
 
@@ -223,7 +223,7 @@ class Metadata
         ];
 	}
 
-	public function list_of_categories()
+	public function listOfCategories()
 	{
 
 		return 
@@ -261,7 +261,7 @@ class Metadata
     	];
 	}
 
-	public function list_of_tags()
+	public function listOfTags()
 	{
 		return 
         [

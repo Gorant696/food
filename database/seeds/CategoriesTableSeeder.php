@@ -13,10 +13,10 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run(Categories $categories, Metadata $meta)
     {
-    	foreach ($meta->list_of_categories() as $key => $one_category) {
+    	foreach ($meta->listOfCategories() as $key => $one_category) {
     		$category_main = $categories->create(['slug' => $key]);
     		foreach ($one_category as $one) {
-    			$category_main->categories_trans()->create([
+    			$category_main->categoriesTrans()->create([
     				'language_id' => $one['language_id'],
     				'title' => $one['title']
     			]);
