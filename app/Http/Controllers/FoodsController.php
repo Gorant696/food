@@ -84,17 +84,17 @@ class FoodsController extends Controller
                         array_push($final_food_ids, $food_id);
                     }
                 }
-                 return $final_food_ids;
+                return $final_food_ids;
         } // End of if statement
 
         else {
             //Get the IDs of foods
             if ($request->diff_time) {
-               return $foods->withTrashed()
-                   ->whereDate('foods.created_at', '>=', Carbon::parse($request->diff_time))
-                   ->orWhereDate('foods.updated_at', '>=', Carbon::parse($request->diff_time))
-                   ->orWhereDate('foods.deleted_at', '>=', Carbon::parse($request->diff_time))
-                   ->get()->pluck('id')->toArray();
+                return $foods->withTrashed()
+                ->whereDate('foods.created_at', '>=', Carbon::parse($request->diff_time))
+                ->orWhereDate('foods.updated_at', '>=', Carbon::parse($request->diff_time))
+                ->orWhereDate('foods.deleted_at', '>=', Carbon::parse($request->diff_time))
+                ->get()->pluck('id')->toArray();
             } else {
                  return $foods->get()->pluck(Constants::ID)->toArray();
             }
@@ -108,7 +108,7 @@ class FoodsController extends Controller
     {
         if ($request->category_id) {
             $final_foods = $final_foods->where(Constants::CAT_ID, $request->category_id);
-        } 
+        }
         return $final_foods;
     }
 
