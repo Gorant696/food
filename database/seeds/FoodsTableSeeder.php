@@ -15,11 +15,10 @@ class FoodsTableSeeder extends Seeder
      */
     public function run(Foods $foods, Categories $categories, Metadata $meta, Tags $tags)
     {
-   
         foreach ($meta->listOfFood($categories) as $key => $one_meal) {
             $food_main = $foods->create(['slug' => $key]);
 
-            //Attach random tag to one food 
+            //Attach random tag to one food
             $tag_array = $tags->get()->pluck('id')->toArray();
             $random_tag_key = rand(0, count($tag_array)-1);
             $food_main->tags()->attach($tag_array[$random_tag_key]);

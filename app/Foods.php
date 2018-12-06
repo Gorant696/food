@@ -20,11 +20,11 @@ class Foods extends Model
 
     public function ingredients()
     {
-    	return $this->belongsToMany('App\Ingredients', 'foods_ingredients_pivot', 'food_id', 'ingredient_id');
+        return $this->belongsToMany('App\Ingredients', 'foods_ingredients_pivot', 'food_id', 'ingredient_id');
     }
 
     public function tags()
     {
-    	return $this->belongsToMany('App\Tags', 'foods_tags_pivot', 'food_id', 'tag_id');
+        return $this->belongsToMany('App\Tags', 'foods_tags_pivot', 'food_id', 'tag_id');
     }
 }

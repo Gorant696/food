@@ -15,6 +15,6 @@ class Ingredients extends Model
 
     public function foods()
     {
-    	return $this->belongsToMany('App\Foods', 'foods_ingredients_pivot', 'ingredient_id', 'food_id');
+        return $this->belongsToMany('App\Foods', 'foods_ingredients_pivot', 'ingredient_id', 'food_id');
     }
 }

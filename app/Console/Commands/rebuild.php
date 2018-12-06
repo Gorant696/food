@@ -5,8 +5,6 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 
-
-
 class rebuild extends Command
 {
     /**
@@ -51,14 +49,14 @@ class rebuild extends Command
         }
 
         //Queries to drop and create fresh database "menu"
-         mysqli_query($conn,"DROP DATABASE ".$db);
-         mysqli_query($conn,"CREATE DATABASE ".$db." character set UTF8 collate utf8_general_ci");
+        mysqli_query($conn, "DROP DATABASE ".$db);
+        mysqli_query($conn, "CREATE DATABASE ".$db." character set UTF8 collate utf8_general_ci");
 
-         //Creating fresh DB tables defined in database/migration folder
-         Artisan::call('migrate:refresh');
+        //Creating fresh DB tables defined in database/migration folder
+        Artisan::call('migrate:refresh');
 
-         //Seed predefined data from app/Meta/Metadata.php file
-         Artisan::call('db:seed');
+        //Seed predefined data from app/Meta/Metadata.php file
+        Artisan::call('db:seed');
 
         echo "Application installed successfully!";
     }

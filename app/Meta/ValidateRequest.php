@@ -3,12 +3,12 @@
 namespace App\Meta;
 
 /*
-	Class responsible for validating parameters from request
+    Class responsible for validating parameters from request
 */
 
 class ValidateRequest
 {
-    static function index()
+    public static function index()
     {
         return [
             'tags' => 'sometimes|array',
@@ -23,7 +23,7 @@ class ValidateRequest
         ];
     }
 
-    static function store()
+    public static function store()
     {
         return [
             'slug' => 'required|string|regex:/^[a-z0-9_]+$/',
@@ -44,7 +44,7 @@ class ValidateRequest
         ];
     }
 
-    static function delete()
+    public static function delete()
     {
         return [
             'ids' => 'required|array',
@@ -52,7 +52,7 @@ class ValidateRequest
         ];
     }
 
-    static function restore()
+    public static function restore()
     {
         return [
             'ids' => 'required|array',
@@ -60,4 +60,3 @@ class ValidateRequest
         ];
     }
 }
-

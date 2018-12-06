@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
 use App\Meta\ValidateRequest;
 
-
 class Validate
 {
     /**
@@ -22,8 +21,8 @@ class Validate
         //Validate parameters from request
         $validation = Validator::make($request->all(), ValidateRequest::{$this->routeIndex()[$request->route()->methods[0]]}());
         
-        if($validation->fails()){
-                return response()->json(['message' => $validation->errors()]);
+        if ($validation->fails()) {
+            return response()->json(['message' => $validation->errors()]);
         }
 
         return $next($request);

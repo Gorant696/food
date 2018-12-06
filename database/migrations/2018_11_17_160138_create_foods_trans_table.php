@@ -14,7 +14,6 @@ class CreateFoodsTransTable extends Migration
     public function up()
     {
         Schema::create('foods_trans', function (Blueprint $table) {
-
             $table->bigIncrements('id');
             $table->bigInteger('food_id')->unsigned();
             $table->bigInteger('language_id')->unsigned();

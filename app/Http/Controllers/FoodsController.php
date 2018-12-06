@@ -30,16 +30,14 @@ class FoodsController extends Controller
     public const CREATED = 'created';
     public const UPDATED = 'updated';
 
-    public function index
-        (
+    public function index(
             Request $request,
             Foods $foods,
             Tags $tags,
             FoodsTrans $foods_trans,
             TagsTrans $tags_trans,
             IngredientsTrans $ingredients_trans
-        ) 
-    {
+        ) {
        
         //Filter foods by tags
         $final_food_ids = $this->filterFoodsByTags($request, $tags, $foods);
@@ -65,40 +63,38 @@ class FoodsController extends Controller
         //If tags parameter is true and contain IDs of tags, filter foods based on tag IDs
         if (isset($request->tags) && !empty($request->tags)) {
 
-                //Defined arrays
-                $food_id_array = [];
-                $final_food_ids = [];
+            //Defined arrays
+            $food_id_array = [];
+            $final_food_ids = [];
 
-                //Find all foods entites attached to tag ID's from request
-                if ($request->diff_time) {
+            //Find all foods entites attached to tag ID's from request
+            if ($request->diff_time) {
+                $diff_time = $request->diff_time;
 
-                    $diff_time = $request->diff_time;
-
-                    $collection_tags = $tags->whereIn(self::ID, $request->tags)->with([self::FOODS => function ($query) use ($diff_time){
-                        $query->withTrashed()
+                $collection_tags = $tags->whereIn(self::ID, $request->tags)->with([self::FOODS => function ($query) use ($diff_time) {
+                    $query->withTrashed()
                         ->whereDate('foods.created_at', '>=', Carbon::parse($diff_time))
                         ->orWhereDate('foods.updated_at', '>=', Carbon::parse($diff_time))
                         ->orWhereDate('foods.deleted_at', '>=', Carbon::parse($diff_time));
-                    }])->get()->pluck(self::FOODS)->toArray();
+                }])->get()->pluck(self::FOODS)->toArray();
+            } else {
+                $collection_tags = $tags->whereIn(self::ID, $request->tags)->with(self::FOODS)->get()->pluck(self::FOODS)->toArray();
+            }
 
-                } else {
-                      $collection_tags = $tags->whereIn(self::ID, $request->tags)->with(self::FOODS)->get()->pluck(self::FOODS)->toArray();
+            //Loop through foods entites, extract their ID's and organize them in one layer array
+            foreach ($collection_tags as $value) {
+                foreach ($value as $food_array) {
+                    array_push($food_id_array, $food_array[self::ID]);
                 }
+            }
 
-                //Loop through foods entites, extract their ID's and organize them in one layer array
-                foreach ($collection_tags as $value) {
-                    foreach ($value as $food_array) {
-                        array_push($food_id_array, $food_array[self::ID]);
-                    }
+            //Count and organize ID's based on duplicate values in food_id_array, and check condition if there are count of same values that corresponds to count of elements of tags array from request. Result is organized final_food_ids array containing ID's of foods resource which have all tags from request attached to themselves in pivot table
+            foreach (array_count_values($food_id_array) as $food_id => $count) {
+                if (count($request->tags) === (int)$count) {
+                    array_push($final_food_ids, $food_id);
                 }
-
-                //Count and organize ID's based on duplicate values in food_id_array, and check condition if there are count of same values that corresponds to count of elements of tags array from request. Result is organized final_food_ids array containing ID's of foods resource which have all tags from request attached to themselves in pivot table
-                foreach (array_count_values($food_id_array) as $food_id => $count) {
-                    if (count($request->tags) === (int)$count) {
-                        array_push($final_food_ids, $food_id);
-                    }
-                }
-                return $final_food_ids;
+            }
+            return $final_food_ids;
         } // End of if statement
 
         else {
@@ -110,7 +106,7 @@ class FoodsController extends Controller
                 ->orWhereDate('foods.deleted_at', '>=', Carbon::parse($request->diff_time))
                 ->get()->pluck('id')->toArray();
             } else {
-                 return $foods->get()->pluck(self::ID)->toArray();
+                return $foods->get()->pluck(self::ID)->toArray();
             }
         }
     }
@@ -170,7 +166,7 @@ class FoodsController extends Controller
         Function responsible for creating ingredients sub-object for food object
     */
     private function ingredients($request, $food_object, $ingredients_trans)
-    { 
+    {
         if (isset($request->with) && in_array(__FUNCTION__, $request->with)) {
             $food_object->with = $ingredients_trans
             ->whereIn(self::INGREDIENT_ID, $this->checkDiffTime($request, $food_object)->first()->ingredients()->get()->pluck(self::ID)->toArray())
@@ -198,8 +194,7 @@ class FoodsController extends Controller
     */
     private function status($request, $food_object)
     {
-        if($request->diff_time) {
-
+        if ($request->diff_time) {
             $food = $food_object->foods()->withTrashed()->first();
 
             if ($food->deleted_at) {
@@ -216,7 +211,6 @@ class FoodsController extends Controller
                 $food_object->status = self::UPDATED;
                 return true;
             }
-
         } else {
             //Default status if diff_time parameter is not send via request
             $food_object->status = self::CREATED;
@@ -254,26 +248,26 @@ class FoodsController extends Controller
 
             if ($food_model) {
 
-                    //Create translations for food model
-                    $food_model->foodsTrans()->create($request->food_trans_hr);
-                    $food_model->foodsTrans()->create($request->food_trans_en);
+                //Create translations for food model
+                $food_model->foodsTrans()->create($request->food_trans_hr);
+                $food_model->foodsTrans()->create($request->food_trans_en);
 
-                    //Attach tag and ingredient ID's into pivot table
-                    foreach ($request->tags as $tag) {
-                        $food_model->tags()->attach($tag);
-                    }
+                //Attach tag and ingredient ID's into pivot table
+                foreach ($request->tags as $tag) {
+                    $food_model->tags()->attach($tag);
+                }
 
-                    foreach ($request->ingredients as $ingredient) {
-                        $food_model->ingredients()->attach($ingredient);
-                    }
+                foreach ($request->ingredients as $ingredient) {
+                    $food_model->ingredients()->attach($ingredient);
+                }
 
-                    //Setting properties for returning model
-                    $this->status($request, $food_model);
-                    $food_model->translations = $food_model->foodsTrans()->with(self::CATEGORIES)->get();
-                    $food_model->ingredients = $food_model->ingredients()->get();
-                    $food_model->tags = $food_model->tags()->get();
+                //Setting properties for returning model
+                $this->status($request, $food_model);
+                $food_model->translations = $food_model->foodsTrans()->with(self::CATEGORIES)->get();
+                $food_model->ingredients = $food_model->ingredients()->get();
+                $food_model->tags = $food_model->tags()->get();
                     
-                    return response()->json(['data' => $food_model]);
+                return response()->json(['data' => $food_model]);
             }
         }
      
@@ -284,7 +278,7 @@ class FoodsController extends Controller
         Soft deleting food models from foods table
     */
     public function delete(Request $request, Foods $foods)
-    {   
+    {
         //Models are soft deleted
         foreach ($request->ids as $id) {
             $foods->findOrFail($id)->delete();
@@ -302,7 +296,5 @@ class FoodsController extends Controller
         $foods->withTrashed()->whereIn('id', $request->ids)->restore();
 
         return response()->json(['message' => 'Restored successfully!'], 200);
-        
     }
-
 }

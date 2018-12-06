@@ -10,11 +10,11 @@ class TagsTrans extends Model
 
     public function tags()
     {
-    	return $this->belongsTo('App\Tags', 'tag_id');
+        return $this->belongsTo('App\Tags', 'tag_id');
     }
 
     public function languages()
     {
-    	return $this->belongsTo('App\Languages', 'language_id');
+        return $this->belongsTo('App\Languages', 'language_id');
     }
 }

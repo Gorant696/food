@@ -17,5 +17,4 @@ class Categories extends Model
     {
         return $this->hasMany('App\FoodsTrans', 'food_id');
     }
-
 }

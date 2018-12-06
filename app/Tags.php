@@ -15,6 +15,6 @@ class Tags extends Model
 
     public function foods()
     {
-    	return $this->belongsToMany('App\Foods', 'foods_tags_pivot', 'tag_id', 'food_id');
+        return $this->belongsToMany('App\Foods', 'foods_tags_pivot', 'tag_id', 'food_id');
     }
 }

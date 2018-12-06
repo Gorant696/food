@@ -6,107 +6,107 @@ use App\Languages;
 use App\Categories;
 
 /*
-	Class responsible holding predefined data for seeding in Database
+    Class responsible holding predefined data for seeding in Database
 */
 class Metadata
 {
-	public function __construct(Languages $languages, Categories $categories)
-	{
-		if ($hr = $languages->where('code_key', 'hr')->first()->id) {
-			$this->hr = $hr;
-		}
+    public function __construct(Languages $languages, Categories $categories)
+    {
+        if ($hr = $languages->where('code_key', 'hr')->first()->id) {
+            $this->hr = $hr;
+        }
 
-		if ($en = $languages->where('code_key', 'en')->first()->id) {
-			$this->en = $en;
-		}
-	}
+        if ($en = $languages->where('code_key', 'en')->first()->id) {
+            $this->en = $en;
+        }
+    }
 
-	static function listOfLanguages()
-	{
-		 return [
-		        'hr' => 'Croatian',
-		        'en' => 'English'
-       	];
-	}
+    public static function listOfLanguages()
+    {
+        return [
+                'hr' => 'Croatian',
+                'en' => 'English'
+           ];
+    }
 
 
-	static function ingredientsForFood()
-	{
-		return [
-				'sir' => ['pizza', 'tjestenina_skampi'],
-				'maslina_ulje' => ['tjestenina_skampi', 'rizoto_piletina'],
-				'celer' => ['tjestenina_skampi', 'rizoto_piletina', 'mix_salata', 'krumpir_salata'],
-				'cesnjak' =>  ['tjestenina_skampi', 'rizoto_piletina', 'krumpir_salata'],
-				'tajni_sastojak' => ['ketchup', 'vocna_torta', 'sladoled_cokolada', 'pizza']
-			   ];
-	}
+    public static function ingredientsForFood()
+    {
+        return [
+                'sir' => ['pizza', 'tjestenina_skampi'],
+                'maslina_ulje' => ['tjestenina_skampi', 'rizoto_piletina'],
+                'celer' => ['tjestenina_skampi', 'rizoto_piletina', 'mix_salata', 'krumpir_salata'],
+                'cesnjak' =>  ['tjestenina_skampi', 'rizoto_piletina', 'krumpir_salata'],
+                'tajni_sastojak' => ['ketchup', 'vocna_torta', 'sladoled_cokolada', 'pizza']
+               ];
+    }
 
-	public function listOfIngredients()
-	{
-		return 
+    public function listOfIngredients()
+    {
+        return
         [
-        	'sir' 			=>		[
-			        					[
-			        					'language_id' => $this->en,
-			        					'title' => 'Cheese'
-			        					],
-			        					[
-			        					'language_id' => $this->hr,
-			        					'title' => 'Sir'
-			        					]
-		        					],
+            'sir' 			=>		[
+                                        [
+                                        'language_id' => $this->en,
+                                        'title' => 'Cheese'
+                                        ],
+                                        [
+                                        'language_id' => $this->hr,
+                                        'title' => 'Sir'
+                                        ]
+                                    ],
             'maslina_ulje'  =>		[
-		    	        				[
-		    	        				'language_id' => $this->en,
-		    	        				'title' => 'Olive oil'
-		    	        				],
-		    	        				[
-		    	        				'language_id' => $this->hr,
-		    	        				'title' => 'Maslinovo Ulje'
-		    	        				]
-		            				],
-		    'celer'    		 => 	[
-		    	        				[
-		    	        				'language_id' => $this->en,
-		    	        				'title' => 'Celery'
-		    	        				],
-		    	        				[
-		    	        				'language_id' => $this->hr,
-		    	        				'title' => 'Celer'
-		    	        				]
-		            				],
-	        'cesnjak'   	=>		[
-		    	        				[
-		    	        				'language_id' => $this->en,
-		    	        				'title' => 'Garlic'
-		    	        				],
-		    	        				[
-		    	        				'language_id' => $this->hr,
-		    	        				'title' => 'Češnjak'
-		    	        				]
-		            				],
-		    'tajni_sastojak'=>		[
-		    	        				[
-		    	        				'language_id' => $this->en,
-		    	        				'title' => 'Secret Ingredient'
-		    	        				],
-		    	        				[
-		    	        				'language_id' => $this->hr,
-		    	        				'title' => 'Tajni sastojak'
-		    	        				]
-		            				]
-    	];
-	}
+                                        [
+                                        'language_id' => $this->en,
+                                        'title' => 'Olive oil'
+                                        ],
+                                        [
+                                        'language_id' => $this->hr,
+                                        'title' => 'Maslinovo Ulje'
+                                        ]
+                                    ],
+            'celer'    		 => 	[
+                                        [
+                                        'language_id' => $this->en,
+                                        'title' => 'Celery'
+                                        ],
+                                        [
+                                        'language_id' => $this->hr,
+                                        'title' => 'Celer'
+                                        ]
+                                    ],
+            'cesnjak'   	=>		[
+                                        [
+                                        'language_id' => $this->en,
+                                        'title' => 'Garlic'
+                                        ],
+                                        [
+                                        'language_id' => $this->hr,
+                                        'title' => 'Češnjak'
+                                        ]
+                                    ],
+            'tajni_sastojak'=>		[
+                                        [
+                                        'language_id' => $this->en,
+                                        'title' => 'Secret Ingredient'
+                                        ],
+                                        [
+                                        'language_id' => $this->hr,
+                                        'title' => 'Tajni sastojak'
+                                        ]
+                                    ]
+        ];
+    }
 
-	public function listOfFood(Categories $categories)
-	{
-		$main_meal = $categories->where('slug', 'glavno-jelo')->first()->id;
+    public function listOfFood(Categories $categories)
+    {
+        $main_meal = $categories->where('slug', 'glavno-jelo')->first()->id;
 
-		$salad = $categories->where('slug', 'salata')->first()->id;
+        $salad = $categories->where('slug', 'salata')->first()->id;
 
-		$dessert = $categories->where('slug', 'desert')->first()->id;
+        $dessert = $categories->where('slug', 'desert')->first()->id;
 
-		return 
+        return
         [
             'pizza'                 => [
                                             [
@@ -221,81 +221,79 @@ class Metadata
                                             ]
                                         ]
         ];
-	}
+    }
 
-	public function listOfCategories()
-	{
-
-		return 
+    public function listOfCategories()
+    {
+        return
         [
-        	'glavno-jelo' => [
-	        					[
-	        					'language_id' => $this->en,
-	        					'title' => 'Main meal'
-	        					],
-	        					[
-	        					'language_id' => $this->hr,
-	        					'title' => 'Glavno jelo'
-	        					]
-        					],
+            'glavno-jelo' => [
+                                [
+                                'language_id' => $this->en,
+                                'title' => 'Main meal'
+                                ],
+                                [
+                                'language_id' => $this->hr,
+                                'title' => 'Glavno jelo'
+                                ]
+                            ],
             'desert'     => [
-    	        				[
-    	        				'language_id' => $this->en,
-    	        				'title' => 'Dessert'
-    	        				],
-    	        				[
-    	        				'language_id' => $this->hr,
-    	        				'title' => 'Desert'
-    	        				]
-            				],
+                                [
+                                'language_id' => $this->en,
+                                'title' => 'Dessert'
+                                ],
+                                [
+                                'language_id' => $this->hr,
+                                'title' => 'Desert'
+                                ]
+                            ],
             'salata'     => [
-    	        				[
-    	        				'language_id' => $this->en,
-    	        				'title' => 'Salad'
-    	        				],
-    	        				[
-    	        				'language_id' => $this->hr,
-    	        				'title' => 'Salata'
-    	        				]
-            				]
-    	];
-	}
+                                [
+                                'language_id' => $this->en,
+                                'title' => 'Salad'
+                                ],
+                                [
+                                'language_id' => $this->hr,
+                                'title' => 'Salata'
+                                ]
+                            ]
+        ];
+    }
 
-	public function listOfTags()
-	{
-		return 
+    public function listOfTags()
+    {
+        return
         [
-        	'ukusno'	=>			[
-			        					[
-			        					'language_id' => $this->en,
-			        					'title' => 'Tasty'
-			        					],
-			        					[
-			        					'language_id' => $this->hr,
-			        					'title' => 'Ukusno'
-			        					]
-		        					],
+            'ukusno'	=>			[
+                                        [
+                                        'language_id' => $this->en,
+                                        'title' => 'Tasty'
+                                        ],
+                                        [
+                                        'language_id' => $this->hr,
+                                        'title' => 'Ukusno'
+                                        ]
+                                    ],
             'super'		=>		[
-		    	        				[
-		    	        				'language_id' => $this->en,
-		    	        				'title' => 'Great'
-		    	        				],
-		    	        				[
-		    	        				'language_id' => $this->hr,
-		    	        				'title' => 'Super'
-		    	        				]
-		            				],
-		    'mljac'    		 => 	[
-		    	        				[
-		    	        				'language_id' => $this->en,
-		    	        				'title' => 'Yumi'
-		    	        				],
-		    	        				[
-		    	        				'language_id' => $this->hr,
-		    	        				'title' => 'Mljac'
-		    	        				]
-		            				]
-    	];
-	}
-
+                                        [
+                                        'language_id' => $this->en,
+                                        'title' => 'Great'
+                                        ],
+                                        [
+                                        'language_id' => $this->hr,
+                                        'title' => 'Super'
+                                        ]
+                                    ],
+            'mljac'    		 => 	[
+                                        [
+                                        'language_id' => $this->en,
+                                        'title' => 'Yumi'
+                                        ],
+                                        [
+                                        'language_id' => $this->hr,
+                                        'title' => 'Mljac'
+                                        ]
+                                    ]
+        ];
+    }
 }

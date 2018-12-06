@@ -14,10 +14,10 @@ class LanguagesTableSeeder extends Seeder
     public function run(Languages $languages)
     {
         foreach (Metadata::listOfLanguages() as $key => $language) {
-        	$languages->create([
-        		'code_key' => $key,
-        		'lang_name' => $language
-        	]);
+            $languages->create([
+                'code_key' => $key,
+                'lang_name' => $language
+            ]);
         }
     }
 }
