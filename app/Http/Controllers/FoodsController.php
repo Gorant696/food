@@ -94,6 +94,7 @@ class FoodsController extends Controller
                     array_push($final_food_ids, $food_id);
                 }
             }
+
             return $final_food_ids;
         } // End of if statement
 
@@ -106,6 +107,7 @@ class FoodsController extends Controller
                 ->orWhereDate('foods.deleted_at', '>=', Carbon::parse($request->diff_time))
                 ->get()->pluck('id')->toArray();
             } else {
+
                 return $foods->get()->pluck(self::ID)->toArray();
             }
         }
@@ -119,6 +121,7 @@ class FoodsController extends Controller
         if ($request->category_id) {
             $final_foods = $final_foods->where(self::CATEGORY_ID, $request->category_id);
         }
+
         return $final_foods;
     }
 
@@ -132,6 +135,7 @@ class FoodsController extends Controller
         } else {
             $final_foods = $final_foods->get();
         }
+
         return $final_foods;
     }
 
@@ -145,6 +149,7 @@ class FoodsController extends Controller
                 $food_object->category = $food_object->categories()->first()->categoriesTrans()->where(self::LANGUAGE_ID, $request->language_id)->with(self::CATEGORIES)->first();
             }
         }
+
         return true;
     }
 
@@ -186,6 +191,7 @@ class FoodsController extends Controller
         if ($request->diff_time) {
             $main_object = $main_object->withTrashed();
         }
+
         return $main_object;
     }
 
@@ -232,6 +238,7 @@ class FoodsController extends Controller
             //Set ingredients sub-object of food object
             $this->ingredients($request, $food_object, $ingredients_trans);
         }
+        
         return response()->json(['data' => $final_foods]);
     }
 
