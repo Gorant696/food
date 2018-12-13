@@ -25,7 +25,8 @@ class FoodsRepository
             if ($request->diff_time) {
                 $diff_time = $request->diff_time;
 
-                $collection_tags = $tags->whereIn('id', $request->tags)->with(['foods' => function ($query) use ($diff_time) {
+                $collection_tags = $tags->whereIn('id', $request->tags)
+                ->with(['foods' => function ($query) use ($diff_time) {
                     $query->withTrashed()
                         ->whereDate('foods.created_at', '>=', Carbon::parse($diff_time))
                         ->orWhereDate('foods.updated_at', '>=', Carbon::parse($diff_time))
@@ -141,7 +142,8 @@ class FoodsRepository
     private function tags($request, $final_foods)
     {
         if (isset($request->with) && in_array('tags', $request->with)) {
-            $this->checkDiffTime($request, $final_foods)->loadMissing(['foods.tags.tagsTrans' => function ($query) use ($request) {
+            $this->checkDiffTime($request, $final_foods)
+            ->loadMissing(['foods.tags.tagsTrans' => function ($query) use ($request) {
                 $query->where('language_id', $request->language_id)->get();
             }]);
         }
@@ -169,7 +171,8 @@ class FoodsRepository
     private function ingredients($request, $final_foods)
     {
         if (isset($request->with) && in_array('ingredients', $request->with)) {
-               $this->checkDiffTime($request, $final_foods)->loadMissing(['foods.ingredients.ingredientsTrans' => function ($query) use ($request) {
+               $this->checkDiffTime($request, $final_foods)
+               ->loadMissing(['foods.ingredients.ingredientsTrans' => function ($query) use ($request) {
                 $query->where('language_id', $request->language_id)->get();
             }]);
         }
